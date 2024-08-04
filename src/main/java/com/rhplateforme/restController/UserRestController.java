@@ -1,4 +1,5 @@
 package com.rhplateforme.restController;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -193,6 +194,14 @@ public class UserRestController {
  public Employee getuser(@PathVariable Long id){
 	 return userService.getuser(id);
 	 }
+    @PostMapping("/addfile/{id}/{type}")
+    public String addfile(@RequestParam("file") MultipartFile file,@PathVariable Long id,@PathVariable String type) throws IOException {
+        return userService.addfile(file,id,type);
+    }
+    @PostMapping("/updatefile/{id}/{type}")
+    public String updatefile(@RequestParam("file") MultipartFile file,@PathVariable Long id,@PathVariable String type) throws IOException {
+        return userService.updatefile(file, id,type);
+    }
 	
 	
 	

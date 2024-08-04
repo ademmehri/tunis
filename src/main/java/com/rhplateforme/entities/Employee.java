@@ -2,13 +2,17 @@ package com.rhplateforme.entities;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -17,6 +21,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.MapKeyColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
@@ -52,6 +57,11 @@ private Boolean enabled;
 private TypePack pack;
 private Duree duree;
 private LocalDateTime d_inscrit=LocalDateTime.now();
+@ElementCollection(fetch = FetchType.EAGER)
+@CollectionTable(name = "employee_files")
+@MapKeyColumn(name = "files_key")
+@Column(name = "files_valeur")
+private Map<String, String> fls = new HashMap<>();
 
  @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
 @JoinTable(name="user_role",joinColumns = @JoinColumn(name="user_id") ,

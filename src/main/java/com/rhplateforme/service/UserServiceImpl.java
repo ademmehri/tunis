@@ -1,5 +1,10 @@
 package com.rhplateforme.service;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,10 +15,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.rhplateforme.Repos.RoleRepository;
 import com.rhplateforme.Repos.UserRepository;
-import com.rhplateforme.entities.Employee;
 import com.rhplateforme.entities.*;
 
 
@@ -29,6 +34,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public Employee saveUser(Employee user) {
+		
 		user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 		return userRep.save(user);
 	}
@@ -97,6 +103,12 @@ public class UserServiceImpl implements UserService {
 	        e.setPack(employee.getPack());
 	        e.setDuree(employee.getDuree());
 	        e.setEtat(employee.getEtat());
+	       /* if(employee.getFls()!=null) {
+				String path="/var/www/html/uploads";
+				Path pt=Paths.get(path+"/"+f.getOriginalFilename());
+				Files.copy(f.getInputStream(), pt,StandardCopyOption.REPLACE_EXISTING);
+				return "ok";
+				}*/
 	        return userRep.save(e) ;
 	}
 
@@ -421,6 +433,48 @@ public class UserServiceImpl implements UserService {
 	        e.setDuree(employee.getDuree());
 	        e.setD_inscrit(employee.getD_inscrit());
 	        return userRep.save(e) ;
+		}
+		@Override
+		public String addfile(MultipartFile f,Long id,String type) throws IOException {
+			Employee e;
+	        e=  userRep.findById(id).get();
+			if(f!=null) {
+				String path="/var/www/html/uploads";
+				//String path="C://Users//Lenovo//php//formation angular//testangular - Copie//projetangular//src//assets";
+				Path pt=Paths.get(path+"/"+id+f.getOriginalFilename());
+				e.getFls().put(type,id+f.getOriginalFilename());
+				Files.copy(f.getInputStream(), pt,StandardCopyOption.REPLACE_EXISTING);
+				return "ok";
+				}
+				return null;
+		}
+		@Override
+		public String updatefile(MultipartFile file, Long id,String type) throws IOException {
+			Employee e;
+	        e=  userRep.findById(id).get();
+		    if (file != null) {
+		    	String path="/var/www/html/uploads";
+	            // Définir le chemin de stockage
+	            //String path = "C://Users//Lenovo//php//formation angular//testangular - Copie//projetangular//src//assets";
+	            Path filePath = Paths.get(path + "/" + id + file.getOriginalFilename());
+	            Path suppPath = Paths.get(path + "/" +e.getFls().get("image"));
+	            // Supprimer l'ancien fichier s'il existe
+	    
+	                Files.delete(suppPath);
+	             
+	            // Mettre à jour la Map avec le nouveau nom de fichier
+	            e.getFls().put(type, id + file.getOriginalFilename());
+
+	            // Copier le nouveau fichier à l'emplacement spécifié
+	            Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+
+	            // Enregistrer les changements dans la base de données
+	            userRep.save(e);
+	            
+
+	            return "File updated successfully";
+	        }
+	        return "No file provided";
 		}
 	
 }

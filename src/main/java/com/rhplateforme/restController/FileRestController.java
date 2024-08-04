@@ -23,20 +23,9 @@ import com.rhplateforme.service.FileService;
 public class FileRestController {
 @Autowired
 FileService fileserv;
-@PostMapping("/addimagee/{id}")
-public String addimage(@RequestParam("file") MultipartFile file,@PathVariable Long id) throws IOException {
-    return fileserv.addimage(file,id);
-}
 
-@PostMapping("/addcv/{id}")
-public File addcv(@RequestParam("file") MultipartFile file,@PathVariable Long id) throws IOException {
-    return fileserv.addCV(file,id);
-}
 
-@PostMapping("/updatefile/{id}")
-public File updatefile(@RequestParam("file") MultipartFile file,@PathVariable Long id) throws IOException {
-    return fileserv.updatefile(file, id);
-}
+
 
 
 }

@@ -1,16 +1,21 @@
 package com.rhplateforme.service;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.rhplateforme.Repos.UserRepository;
 import com.rhplateforme.entities.Role;
 import com.rhplateforme.entities.Employee;
+import com.rhplateforme.entities.File;
 
 
 public interface UserService  {
+	String addfile(MultipartFile f,Long id,String type) throws IOException ;
+	String updatefile(MultipartFile f,Long id,String type) throws IOException ;
 	Employee saveUser(Employee user);
 
 	void updatePassword(String email, String newPassword) ;
