@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.rhplateforme.Repos.RoleRepository;
 import com.rhplateforme.Repos.UserRepository;
 import com.rhplateforme.entities.*;
+import com.rhplateforme.mail.EmailSenderService;
 
 
 @Transactional
@@ -31,6 +32,8 @@ public class UserServiceImpl implements UserService {
 	RoleRepository roleRep;
 	@Autowired
 	BCryptPasswordEncoder bCryptPasswordEncoder;
+	@Autowired
+	EmailSenderService emailService;
 
 	@Override
 	public Employee saveUser(Employee user) {
@@ -112,7 +115,7 @@ public class UserServiceImpl implements UserService {
 	        return userRep.save(e) ;
 	}
 
-	
+	/*
 	    //goldhotel
 	    public List<Employee> rechercherEmployeursGold() {
 	        // Créer manuellement une liste de noms de métiers
@@ -233,13 +236,13 @@ public class UserServiceImpl implements UserService {
 	    }
 
 	  //{**************************pack Hotel--------------------------------------}
+	    */
 	    
 	    
 	    
+	  //{-----------------------pack restaurant et salon de thé--------------------------------------}
 	    
-	  //{-----------------------pack restaurant--------------------------------------}
-	    //Gold
-	    public List<Employee> rechercherEmployeursGold_restaurant() {
+	    public List<Employee> rechercherEmployeursrestaurant() {
 	        // Créer manuellement une liste de noms de métiers
 	        List<String> nomsMetiersRecherches = java.util.Arrays.asList("Directeur de la restauration",
 	        		"Directeur financier d'un restaurant", 
@@ -250,6 +253,15 @@ public class UserServiceImpl implements UserService {
 	        		"Barman","Patissier",
 	        		"Boucher","Boulanger","Poissonnier","Chocalatier-confisseur","Charcutier-traiteur","Econome","Gérant",
 	        		"Serveur","Chef de rang",
+	        		"Plongeur","Serveuse",
+	        		"Portier","Directeur de la restauration",
+	        		"Directeur financier d'un restaurant", 
+	        		"Gérant","Econome",
+	        		"Manager de restauration","Chef de cuisine","Chef de partie",
+	        		"Commis de cuisine", 
+	        		"Cuisinier","Pizzaiolo",
+	        		"Barman","Patissier",
+	        		"Boucher","Boulanger","Poissonnier","Chocalatier-confisseur","Charcutier-traiteur","Econome","Gérant","Serveur","Chef de rang",
 	        		"Plongeur","Serveuse",
 	        		"Portier");
 
@@ -274,7 +286,7 @@ public class UserServiceImpl implements UserService {
 	    }
 	    
 	    
-	    
+	    /*
 	  //rechercheMetiersPremium
 	    
 
@@ -357,7 +369,7 @@ public class UserServiceImpl implements UserService {
 	        
 
 	        
-	    }
+	    }*/
 	    public ResponseEntity<Object> getnbspecaliter(){
 	    	 Map<String, Object> responseData = new HashMap<>();
 	    	int nbs=0;
@@ -455,7 +467,7 @@ public class UserServiceImpl implements UserService {
 		    if (file != null) {
 		    	String path="/var/www/html/uploads";
 	            // Définir le chemin de stockage
-	            //String path = "C://Users//Lenovo//php//formation angular//testangular - Copie//projetangular//src//assets";
+	           //String path = "C://Users//Lenovo//php//formation angular//testangular - Copie//projetangular//src//assets";
 	            Path filePath = Paths.get(path + "/" + id + file.getOriginalFilename());
 	            Path suppPath = Paths.get(path + "/" +e.getFls().get("image"));
 	            // Supprimer l'ancien fichier s'il existe
@@ -475,6 +487,18 @@ public class UserServiceImpl implements UserService {
 	            return "File updated successfully";
 	        }
 	        return "No file provided";
+		}
+
+		@Override
+		public List<Employee> rechercherEmployeurshotel() {
+			// TODO Auto-generated method stub
+			return userRep.findAll();
+		}
+
+		@Override
+		public String contact(String email, String descr, String nom) {
+		
+			return emailService.sendemailcontact(email, descr, nom);
 		}
 	
 }

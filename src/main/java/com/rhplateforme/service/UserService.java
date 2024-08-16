@@ -31,15 +31,17 @@ public interface UserService  {
 	
 	Employee updateuser(Employee e);
 	Employee updatepack(Employee employee);
+	String contact(String email,String descr,String nom);
 
-	  public List<Employee> rechercherEmployeursGold();
-	   public List<Employee> rechercherEmployeursSuperieur();
-	   public List<Employee> rechercherEmployeursRestaurer();
-	   public List<Employee> rechercherEmployeursServir();
-	   public List<Employee> rechercherEmployeursGold_restaurant();
-	   public List<Employee> rechercherEmployeursSuperieur_restaurant();
-	   public List<Employee> rechercherEmployeursRestaurer_restaurant() ;
-	   List<Employee> rechercherEmployeursServir_restaurant() ;
+	 // public List<Employee> rechercherEmployeursGold();
+	  public List<Employee> rechercherEmployeurshotel();
+	  // public List<Employee> rechercherEmployeursSuperieur();
+	 //  public List<Employee> rechercherEmployeursRestaurer();
+	 //  public List<Employee> rechercherEmployeursServir();
+	   public List<Employee> rechercherEmployeursrestaurant();
+	 //  public List<Employee> rechercherEmployeursSuperieur_restaurant();
+	 //  public List<Employee> rechercherEmployeursRestaurer_restaurant() ;
+	 //  List<Employee> rechercherEmployeursServir_restaurant() ;
 	    public ResponseEntity<Object> getnbspecaliter();
 	    public List<Employee> getemployes() ;
 	    public Employee getuser(Long id);

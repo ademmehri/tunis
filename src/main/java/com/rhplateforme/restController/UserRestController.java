@@ -135,7 +135,7 @@ public class UserRestController {
     }
 
 
-    @GetMapping("/rechercheemployeeGold")
+  /*  @GetMapping("/rechercheemployeeGold")
  public List<Employee> rechercheremployeeGold(){
 	 return userService.rechercherEmployeursGold();
 	 }
@@ -179,7 +179,7 @@ public class UserRestController {
     @GetMapping("/rechercheemployeeServir_r")
  public List<Employee> rechercheremployeeServir_r(){
 	 return userService.rechercherEmployeursServir_restaurant();
-	 }
+	 }*/
 
  
     @GetMapping("/getsp")
@@ -202,6 +202,18 @@ public class UserRestController {
     public String updatefile(@RequestParam("file") MultipartFile file,@PathVariable Long id,@PathVariable String type) throws IOException {
         return userService.updatefile(file, id,type);
     }
+      @GetMapping("/rechercheemployeehotel")
+    public List<Employee> rechercheremployeehotel(){
+   	 return userService.rechercherEmployeurshotel();
+   	 }
+      @GetMapping("/rechercheemployeerest")
+      public List<Employee> rechercheremployeerest(){
+     	 return userService.rechercherEmployeursrestaurant();
+     	 }
+      @PostMapping("/contact/{email}")
+      public String contact(@RequestParam("desc") String desc,@RequestParam("nom") String nom,@PathVariable String email)  {
+          return userService.contact(email, desc, nom);
+      }
 	
 	
 	

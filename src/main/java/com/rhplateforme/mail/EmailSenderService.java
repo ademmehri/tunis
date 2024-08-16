@@ -32,8 +32,16 @@ public class EmailSenderService {
     
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(to);
-        message.setSubject("Offre");
-        message.setText("offre par "+nomentr+": /n "+descr);
+        message.setSubject("Nouvelle offre d'emploi de la part de " + nomentr);
+        message.setText(
+            "Cher(e) candidat(e),\n\n" +
+            "Nous avons le plaisir de vous informer que vous avez reçu une nouvelle offre d'emploi de la part de l'employeur \"" + nomentr + "\".\n\n" +
+            "Voici une brève description de l'offre :\n" +
+            descr + "\n\n" +
+            "Nous vous invitons à consulter les détails de cette offre et à répondre dans les plus brefs délais.\n\n" +
+            "Cordialement,\n" +
+            "L'équipe de tie-job"
+        );
 
        mailSender.send(message);
 
@@ -64,6 +72,18 @@ public class EmailSenderService {
         		+ "Cordialement,\n"
         		+ "L'équipe de tiejob,\n"
         		+ "CEO El Mehri Mortadha");
+
+       mailSender.send(message);
+
+        return "ok";
+    }
+    @Async
+    public String sendemailcontact(String to,String descr,String nom) {
+    
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo("mehri.mortadha@gmail.com");
+        message.setSubject("Nouvelle Réclamation");
+        message.setText("Nom: " + nom + "\nEmail: " + to + "\nMessage: " + descr);
 
        mailSender.send(message);
 
