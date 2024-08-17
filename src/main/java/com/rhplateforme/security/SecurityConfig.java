@@ -100,7 +100,7 @@ public class SecurityConfig {
 		                        .requestMatchers("/auth/rechercheemployeeSuperieur_r").hasAnyAuthority("ENTR")
 		                        .requestMatchers("/auth/rechercheemployeeRestaurer_r").hasAnyAuthority("ENTR")
 		                        .requestMatchers("/auth/rechercheemployeeServir_r").hasAnyAuthority("ENTR")
-		                        .requestMatchers("/auth/rechercheemployeehotel").hasAnyAuthority("ENTR")
+		                        .requestMatchers("/auth/rechercheemployeehotel").permitAll()
 		                        .requestMatchers("/auth/rechercheemployeerest").hasAnyAuthority("ENTR")
 		                        .requestMatchers("/auth/allemployee").permitAll()
 		                        .requestMatchers("/auth/getuser/*").permitAll()
